@@ -1,5 +1,5 @@
 # EXECUTABLES
-MYSQLDUMP_CMD = '/usr/bin/mysqldump'
+PG_DUMP_CMD = '/usr/bin/pg_dump'
 MONGODUMP_CMD = '/usr/bin/mongodump'
 GZIP_CMD = '/usr/bin/gzip'
 TAR_CMD = '/usr/bin/tar'
@@ -12,11 +12,12 @@ TMP_BACKUP_PATH = 'temp' # Will be created (and removed) inside the directory wh
 USE_SSL = true
 
 # CREATE AWS/S3 CONNECTION
-AWS::S3::Base.establish_connection!(
-  :access_key_id  => '*** YOUR CREDENTIALS HERE ***',
-  :secret_access_key => '*** YOUR CREDENTIALS HERE ***',
-  :use_ssl => USE_SSL
-)
+S3_CONF = {
+  host: '',
+  access_key_id: '',
+  secret_access_key: '',
+  use_ssl: USE_SSL
+}.freeze
 
 # SPECIFY S3 BUCKET
 S3_BUCKET = 'my.unique.name'
@@ -24,14 +25,11 @@ S3_BUCKET = 'my.unique.name'
 # SPECIFY HOW MANY DAYS OF ARCHIVES YOU WANT TO KEEP
 DAYS_OF_ARCHIVES = 7
 
-# MYSQL CONFIG
-#  * Put the MySQL table names that you want to back up in the MYSQL_DBS array below
+# POSTGRESQL CONFIG
+#  * Put the PostgreSQL table names that you want to back up in the POSTGRESQL_DBS array below
 #    Archive will be named in the format: db-table_name-200912010423.tgz
 #    where 200912010423 is the date/time when the script is run
-MYSQL_DBS = ['application_production', 'wordpress', 'something_else']
-MYSQL_DB = 'localhost'
-MYSQL_USER = 'XXXXX'
-MYSQL_PASS = 'XXXXX'
+POSTGRESQL_DBS = ['application_production']
 
 # MONGODB CONFIG
 #  * Put the MongoDB table names that you want to back up in the MONGO_DBS array below
